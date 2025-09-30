@@ -11,6 +11,7 @@ import { FaLinkedin } from 'react-icons/fa';
 import { motion } from "motion/react"
 import Vector1 from "@/public/images/footerVector1.png";
 import Vector2 from "@/public/images/footerVector2.png";
+import Link from 'next/link';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -111,14 +112,14 @@ const Footer = () => {
                 initial="hidden"
                 animate="visible"
               >
-                {["Home", "About Us", "Shop", "Contact Us", "Privacy Policy", "Terms & Conditions"].map((item, idx) => (
+                {[{ name: "Home", href: "/" }, { name: "About Us", href: "/about" }, { name: "Contact Us", href: "/contact" }, { name: "Privacy Policy", href: "/privacy-policy" }, { name: "Terms & Conditions", href: "/terms" }].map((item, idx) => (
                   <motion.li
-                    key={item}
+                    key={item.name}
                     className="text-[#181818] text-[13px] font-normal font-inter leading-[20.80px]"
                     variants={fadeUp}
                     custom={2.1 + idx * 0.1}
                   >
-                    {item}
+                    <Link href={item.href}>{item.name}</Link>
                   </motion.li>
                 ))}
               </motion.ul>
@@ -134,22 +135,14 @@ const Footer = () => {
                 initial="hidden"
                 animate="visible"
               >
-                {[
-                  "Medicine",
-                  "Medical Equipments",
-                  "Beauty Care",
-                  "Baby & Mom Care",
-                  "Healthcare",
-                  "Food & Nutrition",
-                  "Medical Supplies"
-                ].map((item, idx) => (
+                {[{ name: "Medical Gloves", href: "/categories/medical-gloves" }, { name: "Face Masks", href: "/categories/face-masks" }, { name: "Dental Products", href: "/categories/dental-products" }, { name: "Pharma Packaging", href: "/categories/pharma-packaging" }].map((cat, idx) => (
                   <motion.li
-                    key={item}
-                    className=" text-[#181818] text-[13px] font-normal font-inter leading-[20.80px]"
+                    key={cat.name}
+                    className="text-[#181818] text-[13px] font-normal font-inter leading-[20.80px]"
                     variants={fadeUp}
                     custom={3.1 + idx * 0.1}
                   >
-                    {item}
+                    <Link href={cat.href}>{cat.name}</Link>
                   </motion.li>
                 ))}
               </motion.ul>
