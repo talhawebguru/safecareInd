@@ -101,8 +101,8 @@ const MainNav = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/careers" className={`hover:text-[#02c8b0] cursor-pointer ${pathname === "/careers" ? "text-[#02c8b0]" : ""}`}>
-                  Careers
+                <Link href="/contact" className={`hover:text-[#02c8b0] cursor-pointer ${pathname === "/contact" ? "text-[#02c8b0]" : ""}`}>
+                  Contact
                 </Link>
               </li>
             </ul>
@@ -184,8 +184,8 @@ const MainNav = () => {
                   </Link>
                 </motion.li>
                 <motion.li variants={mobileLinkVariants} className="py-2">
-                  <Link href="/careers" className={`hover:text-[#02c8b0] cursor-pointer block ${pathname === "/careers" ? "text-[#02c8b0]" : ""}`} onClick={toggleMobileMenu}>
-                    Careers
+                  <Link href="/contact" className={`hover:text-[#02c8b0] cursor-pointer block ${pathname === "/contact" ? "text-[#02c8b0]" : ""}`} onClick={toggleMobileMenu}>
+                    Contact
                   </Link>
                 </motion.li>
               </ul>
