@@ -21,7 +21,7 @@ export default function Home() {
         <ProductCategories />
         <OurClients />
         <Manufacturing />
-        <KeyStrength />
+        {/* <KeyStrength /> */}
         <News />
         <Quality />
         <NewsLetter />

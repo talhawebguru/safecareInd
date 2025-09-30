@@ -20,9 +20,9 @@ const categories = [
     alt: "Surgical Kits",
   },
   {
-    title: "CSSD Wrappers",
+    title: "EasyWrap",
     img: "/images/category4.png",
-    alt: "CSSD Wrappers",
+    alt: "EasyWrap",
   },
 ];
 
