@@ -5,7 +5,7 @@ import { motion } from "motion/react"
 
 const WhoWeAre = () => {
   return (
-    <section className='relative z-20 -top-28 '>
+    <section className='relative z-20 -top-28 overflow-x-hidden'>
       <Container>
         <motion.div 
           className="max-w-7xl mx-auto pt-8 p-2.5 sm:p-5 lg:p-16  bg-white shadow-lg"

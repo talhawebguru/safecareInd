@@ -5,7 +5,7 @@ import { motion } from "motion/react"
 
 const NewsLetter = () => {
   return (
-    <section className='bg-[url("/images/endSection.png")] bg-no-repeat bg-cover py-12'>
+    <section className='bg-[url("/images/endSection.png")] overflow-x-hidden bg-no-repeat bg-cover py-12'>
       <Container>
         <motion.div 
           className='flex flex-col md:flex-row items-center justify-between gap-6'

@@ -5,7 +5,7 @@ import { motion } from "motion/react"
 
 const OurMissionOurVision = () => {
   return (
-    <section className='py-16'>
+    <section className='py-16 overflow-x-hidden'>
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
           {/* Our Mission */}
