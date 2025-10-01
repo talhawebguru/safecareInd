@@ -164,14 +164,14 @@ const Hero = () => {
         }
 
         .hero-swiper .swiper-pagination {
-          bottom: 30px !important;
+          bottom: 100px !important;
           left: 50% !important;
           transform: translateX(-50%) !important;
           width: auto !important;
           display: flex !important;
           gap: 8px !important;
           justify-content: center !important;
-          z-index: 20 !important;
+          z-index: 40 !important;
         }
 
         .hero-swiper .swiper-pagination-bullet {
