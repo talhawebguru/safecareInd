@@ -31,19 +31,19 @@ const TopNav = () => {
           <div className="flex items-center space-x-2 px-4 h-full">
             <LuPhone className="text-white" />
             <a
-              href="tel:+971-2-5067321"
+              href="tel:+971554334560"
               className="text-white text-base font-normal font-['Inter'] leading-normal"
             >
-              (239) 555-0108
+              +971-554 334 560
             </a>
           </div>
           <div className="flex items-center space-x-2 px-4 h-full">
             <CiMail className="text-white" />
             <a
-              href="mailto:info@safecareind.xyz"
+              href="mailto:info@safecareind.com"
               className="text-white text-base font-normal font-['Inter'] leading-normal"
             >
-              info@safecareind.xyz
+              info@safecareind.com
             </a>
           </div>
         </div>

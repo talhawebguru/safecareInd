@@ -1,0 +1,109 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "prdID": "GLOVE-001",
+      "prdName": "Nitrile Examination Gloves - Powder Free",
+      "catName": "Medical Gloves",
+      "categoryId": "1",
+      "imageUrl": "/images/category1.png",
+      "rating": "4.8",
+      "reviews": 125,
+      "isAvailable": true,
+      "description": "High-quality nitrile examination gloves, powder-free, latex-free, and suitable for medical and industrial use.",
+      "price": 45.99,
+      "brand": "SafeCare",
+      "sizes": ["Small", "Medium", "Large", "X-Large"],
+      "specifications": {
+        "material": "Nitrile",
+        "color": "Blue",
+        "thickness": "0.12mm",
+        "length": "240mm",
+        "packaging": "100 pieces per box"
+      }
+    },
+    {
+      "id": 2,
+      "prdID": "MASK-001",
+      "prdName": "3-Ply Disposable Face Masks",
+      "catName": "Face Masks",
+      "categoryId": "2",
+      "imageUrl": "/images/category2.png",
+      "rating": "4.6",
+      "reviews": 89,
+      "isAvailable": true,
+      "description": "Comfortable 3-ply disposable face masks with elastic ear loops, suitable for daily protection.",
+      "price": 15.99,
+      "brand": "SafeCare",
+      "specifications": {
+        "layers": "3-Ply",
+        "material": "Non-woven fabric",
+        "color": "Blue/White",
+        "filtration": "BFE >95%",
+        "packaging": "50 pieces per box"
+      }
+    },
+    {
+      "id": 3,
+      "prdID": "DENTAL-001",
+      "prdName": "Dental Bibs - Disposable",
+      "catName": "Dental Products",
+      "categoryId": "3",
+      "imageUrl": "/images/category3.png",
+      "rating": "4.7",
+      "reviews": 67,
+      "isAvailable": true,
+      "description": "High-quality disposable dental bibs with waterproof backing, perfect for dental clinics.",
+      "price": 12.50,
+      "brand": "SafeCare",
+      "specifications": {
+        "material": "2-ply tissue + 1-ply poly",
+        "size": "13\" x 18\"",
+        "color": "White/Blue/Pink",
+        "packaging": "500 pieces per carton"
+      }
+    },
+    {
+      "id": 4,
+      "prdID": "PHARMA-001",
+      "prdName": "Pharmaceutical Blister Packaging",
+      "catName": "Pharma Packaging",
+      "categoryId": "4",
+      "imageUrl": "/images/category4.png",
+      "rating": "4.9",
+      "reviews": 45,
+      "isAvailable": true,
+      "description": "Custom pharmaceutical blister packaging solutions for tablets and capsules.",
+      "price": 99.99,
+      "brand": "SafeCare",
+      "specifications": {
+        "material": "PVC/PVDC/Aluminum foil",
+        "customization": "Available",
+        "cavitySize": "Custom sizes",
+        "packaging": "Roll form or pre-cut"
+      }
+    },
+    {
+      "id": 5,
+      "prdID": "GLOVE-002",
+      "prdName": "Latex Surgical Gloves - Sterile",
+      "catName": "Medical Gloves",
+      "categoryId": "1",
+      "imageUrl": "/images/category1.png",
+      "rating": "4.9",
+      "reviews": 156,
+      "isAvailable": true,
+      "description": "Premium latex surgical gloves, sterile, powder-free, and suitable for surgical procedures.",
+      "price": 65.00,
+      "brand": "SafeCare",
+      "sizes": ["6.0", "6.5", "7.0", "7.5", "8.0", "8.5"],
+      "specifications": {
+        "material": "Natural Rubber Latex",
+        "sterility": "Sterile",
+        "thickness": "0.20mm",
+        "length": "290mm",
+        "packaging": "50 pairs per box"
+      }
+    }
+  ]
+}
