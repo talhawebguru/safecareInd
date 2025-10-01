@@ -1,40 +1,184 @@
-import React from 'react'
-import Container from '../common/Container'
-import * as motion from "motion/react-client"
+"use client";
+import React, { useRef } from 'react';
+import Container from '../common/Container';
+import * as motion from "motion/react-client";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination, EffectFade } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
 
 const Hero = () => {
-  return (
-    <section className="overflow-hidden bg-[url('/images/heroBg.png')] bg-cover bg-center bg-no-repeat h-auto lg:h-[663px] flex items-center min-h-[400px]">
-      <Container>
-        <div className="flex items-center min-h-[663px]">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: 'easeOut' }}
-            className="relative w-full max-w-[623px]"
-          >
-            {/* Welcome Badge */}
-            <div className="absolute left-0 top-0 z-10">
-              <div className="bg-[#02c8b0] rounded-tl-[4px] rounded-tr-[4px] rounded-bl-[0px] rounded-br-[0px] px-6 py-2 min-w-[167px] min-h-[57px] flex items-center">
-                <span className="text-white text-[28.75px] font-normal font-roboto leading-none">Welcome!</span>
-              </div>
-            </div>
-            {/* Glass Card */}
-            <div className="mt-[45px] pl-[14px]">
-              <div className="bg-white/50 border-l-[6px] border-[#02c8b0] backdrop-blur-[7px] p-8 pt-12 relative">
-                <h1 className="text-[#1e1e1e] text-4xl font-normal font-roboto mb-6">
-                  Revolutionise care.<br />For people and planet.
-                </h1>
-                <div className="mt-2">
-                  <p className="text-[#323232] text-xl font-medium font-poppins">Safecare Medical Industries  was conceived and established in the year of 2016.</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </Container>
-    </section>
-  )
-}
+  const swiperRef = useRef(null);
 
-export default Hero
+  const slides = [
+    {
+      id: 1,
+      badge: "Welcome!",
+      title: "Revolutionise care.",
+      subtitle: "For people and planet.",
+      description: "Safecare Medical Industries was conceived and established in the year of 2016."
+    },
+    {
+      id: 2,
+      badge: "Quality First",
+      title: "Premium Medical Supplies.",
+      subtitle: "Trusted Worldwide.",
+      description: "Manufacturing excellence with international quality certifications and standards."
+    },
+    {
+      id: 3,
+      badge: "Innovation",
+      title: "Advanced Healthcare Solutions.",
+      subtitle: "For Better Tomorrow.",
+      description: "Committed to delivering innovative products that enhance healthcare quality globally."
+    }
+  ];
+
+  return (
+    <section className="overflow-hidden bg-[url('/images/heroBg.png')] bg-cover bg-center bg-no-repeat h-auto lg:h-[663px] flex items-center min-h-[400px] relative">
+      <Container>
+        <Swiper
+          ref={swiperRef}
+          modules={[Autoplay, Pagination, EffectFade]}
+          spaceBetween={0}
+          slidesPerView={1}
+          autoplay={{
+            delay: 5000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
+          speed={1000}
+          effect="fade"
+          fadeEffect={{
+            crossFade: true
+          }}
+          pagination={{
+            clickable: true,
+            bulletClass: 'swiper-pagination-bullet !bg-white/70',
+            bulletActiveClass: 'swiper-pagination-bullet-active !bg-[#02c8b0]',
+          }}
+          loop={true}
+          className="hero-swiper w-full"
+        >
+          {slides.map((slide, index) => (
+            <SwiperSlide key={slide.id}>
+              <div className="flex items-center min-h-[663px] py-12 lg:py-0">
+                <motion.div
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    duration: 0.8, 
+                    ease: 'easeOut',
+                    delay: 0.2
+                  }}
+                  className="relative w-full max-w-[623px]"
+                >
+                  {/* Welcome Badge */}
+                  <motion.div
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ 
+                      duration: 0.6, 
+                      ease: 'easeOut',
+                      delay: 0.4
+                    }}
+                    className="absolute left-0 top-0 z-10"
+                  >
+                    <div className="bg-[#02c8b0] rounded-tl-[4px] rounded-tr-[4px] rounded-bl-[0px] rounded-br-[0px] px-4 sm:px-6 py-2 min-w-[140px] sm:min-w-[167px] min-h-[50px] sm:min-h-[57px] flex items-center">
+                      <span className="text-white text-[22px] sm:text-[28.75px] font-normal font-roboto leading-none">
+                        {slide.badge}
+                      </span>
+                    </div>
+                  </motion.div>
+
+                  {/* Glass Card */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ 
+                      duration: 0.7, 
+                      ease: 'easeOut',
+                      delay: 0.5
+                    }}
+                    className="mt-[45px] pl-[10px] sm:pl-[14px]"
+                  >
+                    <div className="bg-white/50 border-l-[6px] border-[#02c8b0] backdrop-blur-[7px] p-6 sm:p-8 pt-10 sm:pt-12 relative">
+                      <motion.h1
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ 
+                          duration: 0.6, 
+                          ease: 'easeOut',
+                          delay: 0.7
+                        }}
+                        className="text-[#1e1e1e] text-3xl sm:text-4xl font-normal font-roboto mb-4 sm:mb-6"
+                      >
+                        {slide.title}<br />{slide.subtitle}
+                      </motion.h1>
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ 
+                          duration: 0.6, 
+                          ease: 'easeOut',
+                          delay: 0.9
+                        }}
+                        className="mt-2"
+                      >
+                        <p className="text-[#323232] text-lg sm:text-xl font-medium font-poppins">
+                          {slide.description}
+                        </p>
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </Container>
+
+      <style jsx global>{`
+        .hero-swiper .swiper-pagination {
+          bottom: 30px !important;
+          left: 50% !important;
+          transform: translateX(-50%) !important;
+          width: auto !important;
+          display: flex !important;
+          gap: 8px !important;
+          justify-content: center !important;
+        }
+
+        .hero-swiper .swiper-pagination-bullet {
+          width: 12px !important;
+          height: 12px !important;
+          opacity: 1 !important;
+          transition: all 0.3s ease !important;
+        }
+
+        .hero-swiper .swiper-pagination-bullet-active {
+          width: 32px !important;
+          border-radius: 6px !important;
+        }
+
+        @media (max-width: 640px) {
+          .hero-swiper .swiper-pagination {
+            bottom: 20px !important;
+          }
+          
+          .hero-swiper .swiper-pagination-bullet {
+            width: 10px !important;
+            height: 10px !important;
+          }
+          
+          .hero-swiper .swiper-pagination-bullet-active {
+            width: 24px !important;
+          }
+        }
+      `}</style>
+    </section>
+  );
+};
+
+export default Hero;
