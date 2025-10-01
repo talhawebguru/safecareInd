@@ -17,53 +17,63 @@ const Hero = () => {
       badge: "Welcome!",
       title: "Revolutionise care.",
       subtitle: "For people and planet.",
-      description: "Safecare Medical Industries was conceived and established in the year of 2016."
+      description: "Safecare Medical Industries was conceived and established in the year of 2016.",
+      bgImage: "/images/heroBg1.png"
     },
     {
       id: 2,
       badge: "Quality First",
       title: "Premium Medical Supplies.",
       subtitle: "Trusted Worldwide.",
-      description: "Manufacturing excellence with international quality certifications and standards."
+      description: "Manufacturing excellence with international quality certifications and standards.",
+      bgImage: "/images/heroBg2.png"
     },
     {
       id: 3,
       badge: "Innovation",
       title: "Advanced Healthcare Solutions.",
       subtitle: "For Better Tomorrow.",
-      description: "Committed to delivering innovative products that enhance healthcare quality globally."
+      description: "Committed to delivering innovative products that enhance healthcare quality globally.",
+      bgImage: "/images/heroBg3.png"
     }
   ];
 
   return (
-    <section className="overflow-hidden bg-[url('/images/heroBg.png')] bg-cover bg-center bg-no-repeat h-auto lg:h-[663px] flex items-center min-h-[400px] relative">
-      <Container>
-        <Swiper
-          ref={swiperRef}
-          modules={[Autoplay, Pagination, EffectFade]}
-          spaceBetween={0}
-          slidesPerView={1}
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-          }}
-          speed={1000}
-          effect="fade"
-          fadeEffect={{
-            crossFade: true
-          }}
-          pagination={{
-            clickable: true,
-            bulletClass: 'swiper-pagination-bullet !bg-white/70',
-            bulletActiveClass: 'swiper-pagination-bullet-active !bg-[#02c8b0]',
-          }}
-          loop={true}
-          className="hero-swiper w-full"
-        >
-          {slides.map((slide, index) => (
-            <SwiperSlide key={slide.id}>
-              <div className="flex items-center min-h-[663px] py-12 lg:py-0">
+    <section className="overflow-hidden relative -z-30 h-auto lg:h-[763px] flex items-center min-h-[400px]">
+      <Swiper
+        ref={swiperRef}
+        modules={[Autoplay, Pagination, EffectFade]}
+        spaceBetween={0}
+        slidesPerView={1}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        speed={1000}
+        effect="fade"
+        fadeEffect={{
+          crossFade: true
+        }}
+        pagination={{
+          clickable: true,
+          bulletClass: 'swiper-pagination-bullet !bg-white/70',
+          bulletActiveClass: 'swiper-pagination-bullet-active !bg-[#02c8b0]',
+        }}
+        loop={true}
+        className="hero-swiper -z-20 w-full h-full absolute inset-0"
+      >
+        {slides.map((slide, index) => (
+          <SwiperSlide key={slide.id}>
+            {/* Background Image */}
+            <div 
+              className="absolute -z-10 inset-0 w-full h-full bg-cover bg-bottom bg-no-repeat"
+              style={{ backgroundImage: `url('${slide.bgImage}')` }}
+            />
+            
+            {/* Content */}
+            <Container>
+              <div className="flex items-center min-h-[400px] lg:min-h-[663px] py-12 lg:py-0 relative z-10">
                 <motion.div
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -134,12 +144,25 @@ const Hero = () => {
                   </motion.div>
                 </motion.div>
               </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </Container>
+            </Container>
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
       <style jsx global>{`
+        .hero-swiper {
+          position: absolute !important;
+          inset: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+        }
+
+        .hero-swiper .swiper-slide {
+          position: relative !important;
+          width: 100% !important;
+          height: 100% !important;
+        }
+
         .hero-swiper .swiper-pagination {
           bottom: 30px !important;
           left: 50% !important;
@@ -148,6 +171,7 @@ const Hero = () => {
           display: flex !important;
           gap: 8px !important;
           justify-content: center !important;
+          z-index: 20 !important;
         }
 
         .hero-swiper .swiper-pagination-bullet {
