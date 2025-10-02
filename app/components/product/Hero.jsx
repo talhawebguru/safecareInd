@@ -7,7 +7,7 @@ const Hero = () => {
         <h1 className="text-center justify-start text-neutral-900 text-5xl font-medium font-roboto">
           Our Products
         </h1>
-        <div className="text-center justify-start text-neutral-900 text-2xl font-normal font-['Roboto']">
+        <div className="text-center justify-start text-neutral-900 text-2xl font-normal font-roboto">
           Home / Products / Wound Care
         </div>
       </section>

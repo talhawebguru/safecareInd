@@ -47,7 +47,7 @@ const Manufacturing = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
-              className="text-[#1e1e1e] text-[44px] font-normal font-['Roboto'] mb-6 leading-tight"
+              className="text-[#1e1e1e] text-[44px] font-normal font-roboto mb-6 leading-tight"
             >
               Manufacturing<br />Techniques
             </motion.h2>
@@ -56,7 +56,7 @@ const Manufacturing = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.7, delay: 0.4, ease: 'easeOut' }}
-              className="text-[#323232] text-xl font-normal font-['Poppins'] mb-2"
+              className="text-[#323232] text-xl font-normal font-poppins mb-2"
             >
               Our manufacturing includes a wide variety of processes including <span className="font-medium">Injection moulding, Blow Moulding, Thermoforming</span> etc. and all those that are required for a World Class Medical Manufacturing Facility.
             </motion.p>

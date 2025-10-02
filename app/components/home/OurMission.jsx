@@ -35,7 +35,7 @@ const OurMission = () => {
                     Advancing Life
                   </h3>
                   <p className="text-[#323232] text-base font-normal font-poppins">
-                    <span className="font-semibold">-</span> That's what we at
+                   That's what we at
                     Safecare are all about. We put ourselves to the test day in,
                     day out. All together. All over the world. With enthusiasm for
                     new ideas.

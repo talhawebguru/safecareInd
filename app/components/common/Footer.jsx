@@ -86,7 +86,7 @@ const Footer = () => {
                 >
                   <LuPhone className="text-[#333333]" />
                   <p className="text-[#333333] text-base font-normal font-inter leading-normal">
-                    (239) 555-0108
+                    +971-554 334 560
                   </p>
                 </motion.div>
                 <motion.div
@@ -96,7 +96,7 @@ const Footer = () => {
                 >
                   <CiMail className="text-[#333333]" />
                   <p className="text-[#333333] text-base font-normal font-inter leading-normal">
-                    info@envisam.xyz
+                    info@safecareind.com
                   </p>
                 </motion.div>
               </div>

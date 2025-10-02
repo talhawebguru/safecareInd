@@ -37,10 +37,10 @@ const ProductCategories = () => {
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <h2 className="text-[#1e1e1e] text-[44px] font-medium font-['Roboto'] mb-4">
+          <h2 className="text-[#1e1e1e] text-[44px] font-medium font-roboto mb-4">
             Our Product Categories
           </h2>
-          <p className="text-[#323232] text-xl font-normal font-['Poppins'] max-w-3xl mx-auto">
+          <p className="text-[#323232] text-xl font-normal font-poppins max-w-3xl mx-auto">
             Our solutions encompass the entire gamut of healthcare delivery,
             ranging from: Turnkey solutions, Surgical, Clinical, Life Sciences,
             Laboratory Medicine etc.
@@ -79,7 +79,7 @@ const ProductCategories = () => {
                 transition={{ duration: 0.6, delay: 0.2 + idx * 0.1 }}
                 className="absolute bottom-0 left-0 w-full h-[57px] bg-gradient-to-b from-[#0898a3]/80 to-[#00d3b3]/80 flex items-center justify-center"
               >
-                <span className="text-white text-2xl font-medium font-['Poppins']">
+                <span className="text-white text-2xl font-medium font-poppins">
                   {cat.title}
                 </span>
               </motion.div>

@@ -38,7 +38,7 @@ const ProductCard = ({
           </div>
           {/* Title */}
           <div
-            className="text-[#1e1e1e] text-lg font-medium font-['Poppins'] leading-normal mt-1 line-clamp-2"
+            className="text-[#1e1e1e] text-lg font-medium font-poppins leading-normal mt-1 line-clamp-2"
             style={{
               display: '-webkit-box',
               WebkitBoxOrient: 'vertical',
@@ -51,10 +51,10 @@ const ProductCard = ({
           {/* Rating, Reviews, Stock */}
           <div className="flex items-center mt-2 mb-1">
             <AiFillStar size={18} className="text-[#ffc831] mr-1" />
-            <span className="text-[#1e1e1e] text-xs font-light font-['Poppins'] leading-none tracking-wide">
+            <span className="text-[#1e1e1e] text-xs font-light font-poppins leading-none tracking-wide">
               {rating || '0.0'} ({reviews || 0} Reviews)
             </span>
-            <span className="ml-auto text-[#1a9452] text-xs font-medium font-['Poppins'] leading-none tracking-wide">
+            <span className="ml-auto text-[#1a9452] text-xs font-medium font-poppins leading-none tracking-wide">
               {inStock ? 'In Stock' : 'Out of Stock'}
             </span>
           </div>

@@ -22,7 +22,7 @@ const WhoWeAre = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            who we are?
+            Who we are?
           </motion.h2>
 
           {/* Content */}

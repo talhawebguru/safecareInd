@@ -16,6 +16,10 @@ const certifications = [
     img: '/images/cert-gmp.png',
     alt: 'GMP Certification',
   },
+  {
+    img: '/images/cert-sfda.png',
+    alt: 'SFDA Certification',
+  },
 ]
 
 const Quality = () => {
@@ -23,8 +27,8 @@ const Quality = () => {
     <section className="overflow-hidden bg-[url('/images/quality-bg.png')] bg-cover bg-center bg-no-repeat py-16 lg:py-24">
       <Container>
         <div className="text-center mb-8">
-          <h2 className="text-[#1e1e1e] text-[44px] font-normal font-['Roboto'] mb-2">Quality & Certifications</h2>
-          <p className="text-[#323232] text-xl font-normal font-['Poppins']">We do care, for your better tomorrow.</p>
+          <h2 className="text-[#1e1e1e] text-[44px] font-normal font-roboto mb-2">Quality & Certifications</h2>
+          <p className="text-[#323232] text-xl font-normal font-poppins">We do care, for your better tomorrow.</p>
         </div>
         <div className="flex flex-wrap justify-center items-center gap-8 mt-12">
           {certifications.map((cert, idx) => (

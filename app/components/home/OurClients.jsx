@@ -45,7 +45,7 @@ const OurClients = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
-          className="text-[#1e1e1e] text-[44px] font-medium font-['Roboto'] text-center mb-12"
+          className="text-[#1e1e1e] text-[44px] font-medium font-roboto text-center mb-12"
         >
           Our Clients
         </motion.h2>

@@ -18,7 +18,7 @@ const OurHistory = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
-            className="text-white text-[44px] font-normal font-['Roboto'] leading-tight mb-2"
+            className="text-white text-[44px] font-normal font-roboto leading-tight mb-6"
           >
             Safecare Medical<br />Industries
           </motion.h2>
@@ -27,16 +27,16 @@ const OurHistory = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-            className="mb-6"
+            className="mb-3"
           >
-            <span className="text-white text-2xl font-medium font-['Poppins']">Our History</span>
+            <span className="text-white text-2xl font-medium font-poppins">Our History</span>
           </motion.div>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
-            className="text-white text-xl font-normal font-['Poppins'] max-w-xl"
+            className="text-white text-xl font-normal font-poppins max-w-xl"
           >
             Headquartered in Abu Dhabi UAE. Safecare is a Domestic Profit Corporation providing quality Medical plastic consumable products across all GCC countries. With its registered subsidiary factories and subsidiary offices across UK, USA, Germany, and China, Safecare thrives on producing and providing quality medical products across the globe.
           </motion.p>

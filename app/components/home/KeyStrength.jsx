@@ -46,7 +46,7 @@ const KeyStrength = () => {
   return (
     <section className="overflow-hidden py-16 lg:py-24">
       <Container>
-        <h2 className="text-[#1e1e1e] text-[44px] font-normal font-['Roboto'] text-center mb-14">Our Key Strengths</h2>
+        <h2 className="text-[#1e1e1e] text-[44px] font-normal font-roboto text-center mb-14">Our Key Strengths</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto">
           {strengths.map((item, idx) => (
             item.type === 'badge' ? (
@@ -59,10 +59,10 @@ const KeyStrength = () => {
                 className="bg-[#079fa5]/10 rounded-2xl p-8 flex flex-col justify-start"
               >
                 <div className="mb-4">
-                  <span className="inline-block px-3 py-1 bg-gradient-to-b from-[#0898a3]/80 to-[#00d3b3]/80 rounded-lg text-white text-[13px] font-medium font-['Poppins']">{item.badge}</span>
+                  <span className="inline-block px-3 py-1 bg-gradient-to-b from-[#0898a3]/80 to-[#00d3b3]/80 rounded-lg text-white text-[13px] font-medium font-poppins">{item.badge}</span>
                 </div>
-                <h3 className="text-[#323232] text-[28px] font-medium font-['Poppins'] mb-4">{item.title}</h3>
-                <p className="text-[#323232] text-xl font-normal font-['Poppins']">{item.desc}</p>
+                <h3 className="text-[#323232] text-[28px] font-medium font-poppins mb-4">{item.title}</h3>
+                <p className="text-[#323232] text-xl font-normal font-poppins">{item.desc}</p>
               </motion.div>
             ) : (
               <motion.div

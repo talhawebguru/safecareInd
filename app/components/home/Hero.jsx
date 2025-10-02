@@ -8,10 +8,11 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
-const Hero = () => {
+const Hero = ({ heroData }) => {
   const swiperRef = useRef(null);
 
-  const slides = [
+  // Default slides if API data is not available
+  const defaultSlides = [
     {
       id: 1,
       badge: "Welcome!",
@@ -37,6 +38,20 @@ const Hero = () => {
       bgImage: "/images/heroBg3.png"
     }
   ];
+
+  // Map API data to slides format
+  const slides = heroData && heroData.length > 0
+    ? heroData.map((item, index) => ({
+        id: item.id || index + 1,
+        badge: item.badge || "Welcome!",
+        title: item.title?.split('.')[0] + '.' || "Revolutionise care.",
+        subtitle: item.title?.split('.')[1]?.trim() || "For people and planet.",
+        description: item.description || "",
+        bgImage: item.bgImage?.url 
+          ? `${process.env.NEXT_PUBLIC_API_URL}${item.bgImage.url}` 
+          : `/images/heroBg${index + 1}.png`
+      }))
+    : defaultSlides;
 
   return (
     <section className="overflow-hidden relative -z-30 h-auto lg:h-[763px] flex items-center min-h-[400px]">
@@ -114,7 +129,7 @@ const Hero = () => {
                     className="mt-[45px] pl-[10px] sm:pl-[14px]"
                   >
                     <div className="bg-white/50 border-l-[6px] border-[#02c8b0] backdrop-blur-[7px] p-6 sm:p-8 pt-10 sm:pt-12 relative">
-                      <motion.h1
+                      <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ 
@@ -122,10 +137,18 @@ const Hero = () => {
                           ease: 'easeOut',
                           delay: 0.7
                         }}
-                        className="text-[#1e1e1e] text-3xl sm:text-4xl font-normal font-roboto mb-4 sm:mb-6"
                       >
-                        {slide.title}<br />{slide.subtitle}
-                      </motion.h1>
+                        {/* First slide uses h1, others use h2 for SEO */}
+                        {index === 0 ? (
+                          <h1 className="text-[#1e1e1e] text-3xl sm:text-4xl font-normal font-roboto mb-4 sm:mb-6">
+                            {slide.title}<br />{slide.subtitle}
+                          </h1>
+                        ) : (
+                          <h2 className="text-[#1e1e1e] text-3xl sm:text-4xl font-normal font-roboto mb-4 sm:mb-6">
+                            {slide.title}<br />{slide.subtitle}
+                          </h2>
+                        )}
+                      </motion.div>
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -136,9 +159,9 @@ const Hero = () => {
                         }}
                         className="mt-2"
                       >
-                        <p className="text-[#323232] text-lg sm:text-xl font-medium font-poppins">
+                        <h3 className="text-[#323232] text-lg sm:text-xl font-medium font-poppins">
                           {slide.description}
-                        </p>
+                        </h3>
                       </motion.div>
                     </div>
                   </motion.div>
