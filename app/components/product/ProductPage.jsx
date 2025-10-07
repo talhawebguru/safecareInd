@@ -6,21 +6,23 @@ import { FiFilter } from "react-icons/fi";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import ProductCard from "./ProductCard";
 import FilterSidebar from "./FilterSidebar";
-// import { fetchProducts } from "@/app/services/api"; // Commented out - will integrate Strapi later
+import { fetchProducts } from "@/app/services/api";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import productsData from "@/app/data/products.json";
 
-const ProductPage = ({ initialCategory }) => {
+const ProductPage = ({ initialCategory, onCategoryChange }) => {
   console.log("[ProductPage] initialCategory prop:", initialCategory); // Expect: category ID from URL or undefined
   const [showFilters, setShowFilters] = useState(false);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalProducts, setTotalProducts] = useState(0);
   const [selectedCategories, setSelectedCategories] = useState(
     initialCategory ? [initialCategory] : ["all"]
   );
+  const [currentCategoryName, setCurrentCategoryName] = useState(null);
+  const [currentSubcategoryName, setCurrentSubcategoryName] = useState(null);
   console.log("[ProductFull] selectedCategories state (init):", selectedCategories); // Expect: [category ID] or ["all"]
 
   const pageSize = 25; // Number of products per page
@@ -29,47 +31,65 @@ const ProductPage = ({ initialCategory }) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        // Simulate API delay
-        await new Promise((resolve) => setTimeout(resolve, 500));
-
-        // Filter products based on selected categories
-        let filteredProducts = productsData.products;
-
-        if (
-          !selectedCategories.includes("all") &&
-          selectedCategories.length > 0
-        ) {
-          filteredProducts = filteredProducts.filter((product) =>
-            selectedCategories.includes(product.categoryId)
-          );
+        // Build filters object
+        const filters = {};
+        
+        if (!selectedCategories.includes("all") && selectedCategories.length > 0) {
+          filters.categoryId = selectedCategories[0];
         }
 
-        // Pagination logic
-        const startIndex = (currentPage - 1) * pageSize;
-        const endIndex = startIndex + pageSize;
-        const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+        const data = await fetchProducts(currentPage, pageSize, filters);
+        
+        // Map Strapi data to component format
+        const mappedProducts = data.data.map((product) => ({
+          id: product.id,
+          documentId: product.documentId,
+          prdID: product.slug,
+          prdName: product.name,
+          catName: product.categories?.[0]?.name || "Uncategorized",
+          categoryId: product.categories?.[0]?.documentId || null,
+          imageUrl: product.img?.url 
+            ? `${process.env.NEXT_PUBLIC_API_URL}${product.img.url}` 
+            : "/images/placeholder.png",
+          rating: "4.5",
+          reviews: 0,
+          isAvailable: true,
+        }));
 
-        setProducts(paginatedProducts);
-        setTotalPages(Math.ceil(filteredProducts.length / pageSize));
+        setProducts(mappedProducts);
+        setTotalPages(data.meta.pagination.pageCount);
+        setTotalProducts(data.meta.pagination.total);
 
-        // Commented out Strapi API integration - will integrate later
-        // let categoryFilter = "";
-        // if (
-        //   selectedCategories.length === 1 &&
-        //   selectedCategories[0] !== "all"
-        // ) {
-        //   categoryFilter = `&filters[categories][id][$eq]=${selectedCategories[0]}`;
-        // } else if (
-        //   selectedCategories.length > 1 &&
-        //   !selectedCategories.includes("all")
-        // ) {
-        //   categoryFilter = `&filters[categories][id][$in]=${selectedCategories.join(",")}`;
-        // }
-        // const data = await fetchProducts(currentPage, pageSize, categoryFilter);
-        // setProducts(data.data);
-        // setTotalPages(data.meta.pagination.pageCount);
+        // Extract category/subcategory names from first product
+        if (!selectedCategories.includes("all") && data.data.length > 0) {
+          const firstProduct = data.data[0];
+          const categoryName = firstProduct.categories?.[0]?.name || null;
+          const subcategoryName = firstProduct.subcategories?.[0]?.name || null;
+          console.log("[ProductPage] Extracted names - Category:", categoryName, "Subcategory:", subcategoryName);
+          setCurrentCategoryName(categoryName);
+          setCurrentSubcategoryName(subcategoryName);
+          
+          // Notify parent component about category change
+          if (onCategoryChange) {
+            console.log("[ProductPage] Calling onCategoryChange with:", categoryName, subcategoryName);
+            onCategoryChange(categoryName, subcategoryName);
+          }
+        } else {
+          console.log("[ProductPage] No filter or 'all' selected, resetting category names");
+          setCurrentCategoryName(null);
+          setCurrentSubcategoryName(null);
+          
+          // Notify parent component that no category is selected
+          if (onCategoryChange) {
+            console.log("[ProductPage] Calling onCategoryChange with: null, null");
+            onCategoryChange(null, null);
+          }
+        }
       } catch (error) {
         console.error("Error fetching products:", error);
+        setProducts([]);
+        setCurrentCategoryName(null);
+        setCurrentSubcategoryName(null);
       } finally {
         setLoading(false);
       }
@@ -79,13 +99,15 @@ const ProductPage = ({ initialCategory }) => {
 
   // Sync selectedCategories with initialCategory when it changes
   useEffect(() => {
-    console.log("[ProductFull] useEffect - initialCategory changed:", initialCategory);
+    console.log("[ProductPage] useEffect - initialCategory changed:", initialCategory);
     if (initialCategory) {
       setSelectedCategories([initialCategory]);
-      console.log("[ProductFull] setSelectedCategories([initialCategory])", [initialCategory]); // Expect: [category ID]
+      setCurrentPage(1);
+      console.log("[ProductPage] setSelectedCategories([initialCategory])", [initialCategory]);
     } else {
       setSelectedCategories(["all"]);
-      console.log("[ProductFull] setSelectedCategories([\"all\"])"); // Expect: ["all"]
+      setCurrentPage(1);
+      console.log("[ProductPage] setSelectedCategories([\"all\"])");
     }
   }, [initialCategory]);
 
@@ -206,10 +228,7 @@ const ProductPage = ({ initialCategory }) => {
       <section>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-12">
           {/* Mobile Filter Button */}
-          <div className="flex justify-between items-center mb-4 lg:hidden">
-            <h2 className="text-[#121212] text-[22px] font-normal font-roboto">
-              "All Products"
-            </h2>
+          <div className="flex justify-end items-center mb-4 lg:hidden">
             <button
               onClick={toggleFilters}
               className="flex items-center gap-1 px-3 py-2 bg-[#f4f4f4] rounded-md text-[#1e1e1e]"
@@ -247,18 +266,21 @@ const ProductPage = ({ initialCategory }) => {
               {/* Desktop title */}
               <div className="hidden lg:flex items-center gap-1 mb-4">
                 <h2 className="justify-start text-[#121212] text-[28px] font-normal font-roboto">
-                  "All Products"
+                  {currentSubcategoryName || currentCategoryName || "All Products"}
                 </h2>
                 <div className="w-14 h-0 outline outline-offset-[-0.50px] outline-[#1e1e1e]"></div>
                 <span className="text-[#1e1e1e] text-[15px] font-normal font-roboto leading-normal tracking-wide">
-                  {loading ? <Skeleton width={50} /> : `${products.length} Results`}
+                  {loading ? <Skeleton width={50} /> : `${totalProducts} Results`}
                 </span>
               </div>
 
               {/* Mobile results count */}
-              <div className="flex lg:hidden items-center mb-4">
+              <div className="flex lg:hidden flex-col gap-2 mb-4">
+                <h2 className="text-[#121212] text-[22px] font-normal font-roboto">
+                  {currentSubcategoryName || currentCategoryName || "All Products"}
+                </h2>
                 <span className="text-[#1e1e1e] text-[15px] font-normal font-roboto leading-normal tracking-wide">
-                  {loading ? <Skeleton width={50} /> : `${products.length} Results`}
+                  {loading ? <Skeleton width={50} /> : `${totalProducts} Results`}
                 </span>
               </div>
 

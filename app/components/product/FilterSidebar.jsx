@@ -2,16 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { MdExpandLess, MdExpandMore } from "react-icons/md";
 import { IoChevronForward, IoChevronDown } from "react-icons/io5";
-// import { fetchCategories } from "@/app/services/api"; // Commented out - will integrate Strapi later
+import { fetchCategories } from "@/app/services/api";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import categoriesData from "@/app/data/categories.json";
 
 const FilterSidebar = ({ selectedCategories, setSelectedCategories }) => {
-  console.log("[FilterSidebar] selectedCategories prop:", selectedCategories); // Expect: ["49"]
+  console.log("[FilterSidebar] selectedCategories prop:", selectedCategories);
   const [openCategory, setOpenCategory] = useState(true);
-  const [openBrands, setOpenBrands] = useState(true);
-  const [selectedBrands, setSelectedBrands] = useState([]);
   const [openSubcategories, setOpenSubcategories] = useState({});
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,13 +17,8 @@ const FilterSidebar = ({ selectedCategories, setSelectedCategories }) => {
     const getCategories = async () => {
       setLoading(true);
       try {
-        // Simulate API delay
-        await new Promise((resolve) => setTimeout(resolve, 300));
-        setCategories(categoriesData.categories || []);
-
-        // Commented out Strapi API integration - will integrate later
-        // const res = await fetchCategories();
-        // setCategories(res.data || []);
+        const res = await fetchCategories();
+        setCategories(res.data || []);
       } catch (e) {
         console.error("Error loading categories:", e);
         setCategories([]);
@@ -37,10 +29,10 @@ const FilterSidebar = ({ selectedCategories, setSelectedCategories }) => {
     getCategories();
   }, []);
 
-  const toggleSubcategory = (categoryId) => {
+  const toggleSubcategory = (categoryDocId) => {
     setOpenSubcategories((prev) => ({
       ...prev,
-      [categoryId]: !prev[categoryId],
+      [categoryDocId]: !prev[categoryDocId],
     }));
   };
 
@@ -49,26 +41,6 @@ const FilterSidebar = ({ selectedCategories, setSelectedCategories }) => {
       setSelectedCategories(["all"]);
     } else {
       setSelectedCategories((prev) =>
-        prev.includes(value)
-          ? prev.filter((v) => v !== value)
-          : [...prev.filter((v) => v !== "all"), value]
-      );
-    }
-  };
-
-  // Dummy brands for now
-  const brands = [
-    { label: "All", value: "all" },
-    { label: "Brand 1", value: "brand-1" },
-    { label: "Brand 2", value: "brand-2" },
-    { label: "Brand 3", value: "brand-3" },
-  ];
-
-  const handleBrandChange = (value) => {
-    if (value === "all") {
-      setSelectedBrands(["all"]);
-    } else {
-      setSelectedBrands((prev) =>
         prev.includes(value)
           ? prev.filter((v) => v !== value)
           : [...prev.filter((v) => v !== "all"), value]
@@ -112,26 +84,25 @@ const FilterSidebar = ({ selectedCategories, setSelectedCategories }) => {
                   </label>
                 </div>
                 {categories.map((cat) => (
-                  <div key={cat.id} className="flex flex-col">
+                  <div key={cat.documentId} className="flex flex-col">
                     <div className="flex items-center">
                       <label className="flex flex-1 items-center gap-2 py-1 cursor-pointer text-[#1e1e1e] text-[15px] font-normal font-['Inter']">
                         <input
                           type="checkbox"
-                          checked={selectedCategories.includes(String(cat.id))}
-                          onChange={() => handleCategoryChange(String(cat.id))}
+                          checked={selectedCategories.includes(cat.documentId)}
+                          onChange={() => handleCategoryChange(cat.documentId)}
                           className="accent-[#1e1e1e] w-4 h-4"
                         />
                         {cat.name}
                       </label>
-                      {console.log(`[FilterSidebar] Checkbox for cat.id=${cat.id} checked:`, selectedCategories.includes(cat.id))}
                       {cat.subcategories && cat.subcategories.length > 0 && (
                         <button
                           type="button"
-                          onClick={() => toggleSubcategory(cat.id)}
+                          onClick={() => toggleSubcategory(cat.documentId)}
                           className="p-1 focus:outline-none"
-                          aria-label={openSubcategories[cat.id] ? "Collapse" : "Expand"}
+                          aria-label={openSubcategories[cat.documentId] ? "Collapse" : "Expand"}
                         >
-                          {openSubcategories[cat.id] ? (
+                          {openSubcategories[cat.documentId] ? (
                             <IoChevronDown size={16} />
                           ) : (
                             <IoChevronForward size={16} />
@@ -139,18 +110,18 @@ const FilterSidebar = ({ selectedCategories, setSelectedCategories }) => {
                         </button>
                       )}
                     </div>
-                    {cat.subcategories && cat.subcategories.length > 0 && openSubcategories[cat.id] && (
+                    {cat.subcategories && cat.subcategories.length > 0 && openSubcategories[cat.documentId] && (
                       <div className="ml-6 mt-1">
                         {cat.subcategories.map((sub) => (
                           <label
-                            key={sub.id}
-                            className="flex items-center gap-2 py-1 cursor-pointer text-[#1e1e1e] text-[15px] font-normal font-['Inter']"
+                            key={sub.documentId}
+                            className="flex items-center gap-2 py-1 cursor-pointer text-[#464646] text-[14px] font-normal font-['Inter']"
                           >
                             <input
                               type="checkbox"
-                              checked={selectedCategories.includes(String(sub.id))}
-                              onChange={() => handleCategoryChange(String(sub.id))}
-                              className="accent-[#1e1e1e] w-4 h-4"
+                              checked={selectedCategories.includes(sub.documentId)}
+                              onChange={() => handleCategoryChange(sub.documentId)}
+                              className="accent-[#079FA5] w-3.5 h-3.5"
                             />
                             {sub.name}
                           </label>

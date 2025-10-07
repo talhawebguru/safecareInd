@@ -1,5 +1,5 @@
 "use client"
-import React, { Suspense } from 'react'
+import React, { Suspense, useState } from 'react'
 import Hero from '../components/product/Hero'
 import ProductPage from '../components/product/ProductPage'
 import { useSearchParams } from 'next/navigation';
@@ -7,11 +7,22 @@ import { useSearchParams } from 'next/navigation';
 const ProductPageContent = () => {
     const searchParams = useSearchParams();
     const initialCategory = searchParams.get('category');
+    const [categoryName, setCategoryName] = useState(null);
+    const [subcategoryName, setSubcategoryName] = useState(null);
+    
+    console.log("[ProductPageContent] Current state - categoryName:", categoryName, "subcategoryName:", subcategoryName);
     
     return (
         <>
-            <Hero />
-            <ProductPage initialCategory={initialCategory} />
+            <Hero categoryName={categoryName} subcategoryName={subcategoryName} />
+            <ProductPage 
+                initialCategory={initialCategory} 
+                onCategoryChange={(catName, subName) => {
+                    console.log("[ProductPageContent] onCategoryChange called with:", catName, subName);
+                    setCategoryName(catName);
+                    setSubcategoryName(subName);
+                }}
+            />
         </>
     )
 }
