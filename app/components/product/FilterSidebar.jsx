@@ -20,7 +20,7 @@ const FilterSidebar = ({ selectedCategories, setSelectedCategories }) => {
         const res = await fetchCategories();
         setCategories(res.data || []);
       } catch (e) {
-        console.error("Error loading categories:", e);
+        console.error("Error loading categories:", e.response?.data || e.message);
         setCategories([]);
       } finally {
         setLoading(false);
@@ -29,22 +29,38 @@ const FilterSidebar = ({ selectedCategories, setSelectedCategories }) => {
     getCategories();
   }, []);
 
-  const toggleSubcategory = (categoryDocId) => {
+  const toggleSubcategory = (categorySlug) => {
     setOpenSubcategories((prev) => ({
       ...prev,
-      [categoryDocId]: !prev[categoryDocId],
+      [categorySlug]: !prev[categorySlug],
     }));
   };
 
   const handleCategoryChange = (value) => {
+    console.log("[FilterSidebar] handleCategoryChange called with:", value);
+    console.log("[FilterSidebar] Current selectedCategories:", selectedCategories);
+    
     if (value === "all") {
       setSelectedCategories(["all"]);
     } else {
-      setSelectedCategories((prev) =>
-        prev.includes(value)
-          ? prev.filter((v) => v !== value)
-          : [...prev.filter((v) => v !== "all"), value]
-      );
+      setSelectedCategories((prev) => {
+        // Remove "all" if it's selected and we're selecting a specific category
+        const filteredPrev = prev.filter((v) => v !== "all");
+        
+        if (filteredPrev.includes(value)) {
+          // Remove the category if it's already selected
+          const newSelection = filteredPrev.filter((v) => v !== value);
+          // If no categories are selected, default to "all"
+          const result = newSelection.length === 0 ? ["all"] : newSelection;
+          console.log("[FilterSidebar] Removing category, new selection:", result);
+          return result;
+        } else {
+          // Add the category to selection
+          const result = [...filteredPrev, value];
+          console.log("[FilterSidebar] Adding category, new selection:", result);
+          return result;
+        }
+      });
     }
   };
 
@@ -84,13 +100,13 @@ const FilterSidebar = ({ selectedCategories, setSelectedCategories }) => {
                   </label>
                 </div>
                 {categories.map((cat) => (
-                  <div key={cat.documentId} className="flex flex-col">
+                  <div key={cat.slug} className="flex flex-col">
                     <div className="flex items-center">
                       <label className="flex flex-1 items-center gap-2 py-1 cursor-pointer text-[#1e1e1e] text-[15px] font-normal font-['Inter']">
                         <input
                           type="checkbox"
-                          checked={selectedCategories.includes(cat.documentId)}
-                          onChange={() => handleCategoryChange(cat.documentId)}
+                          checked={selectedCategories.includes(cat.slug)}
+                          onChange={() => handleCategoryChange(cat.slug)}
                           className="accent-[#1e1e1e] w-4 h-4"
                         />
                         {cat.name}
@@ -98,11 +114,11 @@ const FilterSidebar = ({ selectedCategories, setSelectedCategories }) => {
                       {cat.subcategories && cat.subcategories.length > 0 && (
                         <button
                           type="button"
-                          onClick={() => toggleSubcategory(cat.documentId)}
+                          onClick={() => toggleSubcategory(cat.slug)}
                           className="p-1 focus:outline-none"
-                          aria-label={openSubcategories[cat.documentId] ? "Collapse" : "Expand"}
+                          aria-label={openSubcategories[cat.slug] ? "Collapse" : "Expand"}
                         >
-                          {openSubcategories[cat.documentId] ? (
+                          {openSubcategories[cat.slug] ? (
                             <IoChevronDown size={16} />
                           ) : (
                             <IoChevronForward size={16} />
@@ -110,17 +126,17 @@ const FilterSidebar = ({ selectedCategories, setSelectedCategories }) => {
                         </button>
                       )}
                     </div>
-                    {cat.subcategories && cat.subcategories.length > 0 && openSubcategories[cat.documentId] && (
+                    {cat.subcategories && cat.subcategories.length > 0 && openSubcategories[cat.slug] && (
                       <div className="ml-6 mt-1">
                         {cat.subcategories.map((sub) => (
                           <label
-                            key={sub.documentId}
+                            key={sub.slug}
                             className="flex items-center gap-2 py-1 cursor-pointer text-[#464646] text-[14px] font-normal font-['Inter']"
                           >
                             <input
                               type="checkbox"
-                              checked={selectedCategories.includes(sub.documentId)}
-                              onChange={() => handleCategoryChange(sub.documentId)}
+                              checked={selectedCategories.includes(sub.slug)}
+                              onChange={() => handleCategoryChange(sub.slug)}
                               className="accent-[#079FA5] w-3.5 h-3.5"
                             />
                             {sub.name}
