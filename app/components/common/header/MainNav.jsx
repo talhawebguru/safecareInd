@@ -9,7 +9,6 @@ import { usePathname } from "next/navigation";
 import ProductDropdown from "./ProductDropdown";
 import MobileProductMenu from "./MobileProductMenu";
 
-
 const MainNav = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname(); // <-- Add this line
@@ -83,12 +82,22 @@ const MainNav = () => {
           <nav className="!hidden lg:!block">
             <ul className="flex items-center gap-8 text-[#323232] text-base font-normal font-inter">
               <li>
-                <Link href="/" className={`hover:text-[#02c8b0] cursor-pointer ${pathname === "/" ? "text-[#02c8b0]" : ""}`}>
+                <Link
+                  href="/"
+                  className={`hover:text-[#02c8b0] cursor-pointer ${
+                    pathname === "/" ? "text-[#02c8b0]" : ""
+                  }`}
+                >
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/about" className={`hover:text-[#02c8b0] cursor-pointer ${pathname === "/about" ? "text-[#02c8b0]" : ""}`}>
+                <Link
+                  href="/about"
+                  className={`hover:text-[#02c8b0] cursor-pointer ${
+                    pathname === "/about" ? "text-[#02c8b0]" : ""
+                  }`}
+                >
                   About Us
                 </Link>
               </li>
@@ -96,12 +105,22 @@ const MainNav = () => {
                 <ProductDropdown pathname={pathname} />
               </li>
               <li>
-                <Link href="/gallery" className={`hover:text-[#02c8b0] cursor-pointer ${pathname === "/gallery" ? "text-[#02c8b0]" : ""}`}>
+                <Link
+                  href="/gallery"
+                  className={`hover:text-[#02c8b0] cursor-pointer ${
+                    pathname === "/gallery" ? "text-[#02c8b0]" : ""
+                  }`}
+                >
                   Gallery
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className={`hover:text-[#02c8b0] cursor-pointer ${pathname === "/contact" ? "text-[#02c8b0]" : ""}`}>
+                <Link
+                  href="/contact"
+                  className={`hover:text-[#02c8b0] cursor-pointer ${
+                    pathname === "/contact" ? "text-[#02c8b0]" : ""
+                  }`}
+                >
                   Contact
                 </Link>
               </li>
@@ -109,11 +128,16 @@ const MainNav = () => {
           </nav>
           {/* Shop Now Button */}
           <div className="flex items-center gap-6">
-            <button className="px-[26px] py-2.5 bg-gradient-to-b from-[#0898a3] to-[#00d3b3] flex justify-center items-center cursor-pointer rounded-[5px]">
+            <a
+              href="https://jurhy.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-[26px] py-2.5 bg-gradient-to-b from-[#0898a3] to-[#00d3b3] flex justify-center items-center cursor-pointer rounded-[5px]"
+            >
               <span className="text-white text-base font-medium font-inter">
                 Shop Now
               </span>
-            </button>
+            </a>
           </div>
         </div>
       </motion.section>
@@ -163,39 +187,77 @@ const MainNav = () => {
               variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
             >
               <ul className="flex flex-col gap-4 text-[#323232] text-base font-normal font-inter">
-                <motion.li variants={mobileLinkVariants} className="py-2 border-b border-gray-200">
-                  <Link href="/" className={`hover:text-[#02c8b0] cursor-pointer block ${pathname === "/" ? "text-[#02c8b0]" : ""}`} onClick={toggleMobileMenu}>
+                <motion.li
+                  variants={mobileLinkVariants}
+                  className="py-2 border-b border-gray-200"
+                >
+                  <Link
+                    href="/"
+                    className={`hover:text-[#02c8b0] cursor-pointer block ${
+                      pathname === "/" ? "text-[#02c8b0]" : ""
+                    }`}
+                    onClick={toggleMobileMenu}
+                  >
                     Home
                   </Link>
                 </motion.li>
-                <motion.li variants={mobileLinkVariants} className="py-2 border-b border-gray-200">
-                  <Link href="/about" className={`hover:text-[#02c8b0] cursor-pointer block ${pathname === "/about" ? "text-[#02c8b0]" : ""}`} onClick={toggleMobileMenu}>
+                <motion.li
+                  variants={mobileLinkVariants}
+                  className="py-2 border-b border-gray-200"
+                >
+                  <Link
+                    href="/about"
+                    className={`hover:text-[#02c8b0] cursor-pointer block ${
+                      pathname === "/about" ? "text-[#02c8b0]" : ""
+                    }`}
+                    onClick={toggleMobileMenu}
+                  >
                     About Us
                   </Link>
                 </motion.li>
-                <MobileProductMenu 
-                  pathname={pathname} 
-                  onLinkClick={toggleMobileMenu} 
+                <MobileProductMenu
+                  pathname={pathname}
+                  onLinkClick={toggleMobileMenu}
                   variants={mobileLinkVariants}
                 />
-                <motion.li variants={mobileLinkVariants} className="py-2 border-b border-gray-200">
-                  <Link href="/gallery" className={`hover:text-[#02c8b0] cursor-pointer block ${pathname === "/gallery" ? "text-[#02c8b0]" : ""}`} onClick={toggleMobileMenu}>
+                <motion.li
+                  variants={mobileLinkVariants}
+                  className="py-2 border-b border-gray-200"
+                >
+                  <Link
+                    href="/gallery"
+                    className={`hover:text-[#02c8b0] cursor-pointer block ${
+                      pathname === "/gallery" ? "text-[#02c8b0]" : ""
+                    }`}
+                    onClick={toggleMobileMenu}
+                  >
                     Gallery
                   </Link>
                 </motion.li>
                 <motion.li variants={mobileLinkVariants} className="py-2">
-                  <Link href="/contact" className={`hover:text-[#02c8b0] cursor-pointer block ${pathname === "/contact" ? "text-[#02c8b0]" : ""}`} onClick={toggleMobileMenu}>
+                  <Link
+                    href="/contact"
+                    className={`hover:text-[#02c8b0] cursor-pointer block ${
+                      pathname === "/contact" ? "text-[#02c8b0]" : ""
+                    }`}
+                    onClick={toggleMobileMenu}
+                  >
                     Contact
                   </Link>
                 </motion.li>
               </ul>
               {/* Shop Now Button */}
               <div className="flex items-center gap-6">
-                <button className="px-[26px] py-2.5 w-full mt-5 bg-gradient-to-b from-[#0898a3] to-[#00d3b3] flex justify-center items-center cursor-pointer rounded-[5px]">
+                <a
+                  href="https://jurhy.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-[26px] py-2.5 w-full mt-5 bg-gradient-to-b from-[#0898a3] to-[#00d3b3] flex justify-center items-center cursor-pointer rounded-[5px]"
+                >
                   <span className="text-white text-base font-medium font-inter">
                     Shop
                   </span>
-                </button>
+                </a>
               </div>
             </motion.nav>
           </motion.div>

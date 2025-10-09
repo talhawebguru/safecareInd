@@ -270,17 +270,36 @@ const ProductPage = ({ initialCategory, onCategoryChange }) => {
               className="flex items-center gap-1 px-3 py-2 bg-[#f4f4f4] rounded-md text-[#1e1e1e]"
             >
               <FiFilter size={18} />
-              <span>Filters</span>
+              <span>{showFilters ? 'Hide Filters' : 'Filters'}</span>
             </button>
           </div>
 
+          {/* Mobile Filter Sidebar - Shows inline below button */}
+          {showFilters && (
+            <div className="lg:hidden mb-6">
+              <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                <div className="flex items-center justify-between gap-2 mb-4 border-b-2 border-[#cccccc] pb-2">
+                  <div className="flex items-center gap-2">
+                    <MdFilterListAlt size={20} />
+                    <h3 className="text-[#1e1e1e] text-2xl font-normal font-roboto leading-normal">
+                      Filters
+                    </h3>
+                  </div>
+                  <button onClick={toggleFilters}>
+                    <IoCloseOutline size={24} />
+                  </button>
+                </div>
+                <FilterSidebar
+                  selectedCategories={selectedCategories}
+                  setSelectedCategories={setSelectedCategories}
+                />
+              </div>
+            </div>
+          )}
+
           <div className="flex flex-col lg:flex-row gap-6">
-            {/* Sidebar */}
-            <div
-              className={`$${
-                showFilters ? "block" : "hidden"
-              } lg:block md:flex-1 lg:max-w-[270px] transition-all duration-300 ease-in-out`}
-            >
+            {/* Desktop Sidebar */}
+            <div className="hidden lg:block md:flex-1 lg:max-w-[270px]">
               <div className="flex items-center justify-between gap-2 mb-4 border-b-2 border-[#cccccc] pb-2">
                 <div className="flex items-center gap-2">
                   <MdFilterListAlt size={20} />
@@ -288,9 +307,6 @@ const ProductPage = ({ initialCategory, onCategoryChange }) => {
                     Filters
                   </h3>
                 </div>
-                <button className="lg:hidden" onClick={toggleFilters}>
-                  <IoCloseOutline size={24} />
-                </button>
               </div>
               <FilterSidebar
                 selectedCategories={selectedCategories}
@@ -334,7 +350,7 @@ const ProductPage = ({ initialCategory, onCategoryChange }) => {
               </div>
 
               {/* Product Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
                 {loading
                   ? Array.from({ length: 6 }).map((_, index) => (
                       <ProductCardSkeleton key={index} />
