@@ -6,6 +6,8 @@ import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
 import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ProductDropdown from "./ProductDropdown";
+import MobileProductMenu from "./MobileProductMenu";
 
 
 const MainNav = () => {
@@ -91,9 +93,7 @@ const MainNav = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/product" className={`hover:text-[#02c8b0] cursor-pointer ${pathname === "/product" ? "text-[#02c8b0]" : ""}`}>
-                  Product
-                </Link>
+                <ProductDropdown pathname={pathname} />
               </li>
               <li>
                 <Link href="/gallery" className={`hover:text-[#02c8b0] cursor-pointer ${pathname === "/gallery" ? "text-[#02c8b0]" : ""}`}>
@@ -173,11 +173,11 @@ const MainNav = () => {
                     About Us
                   </Link>
                 </motion.li>
-                <motion.li variants={mobileLinkVariants} className="py-2 border-b border-gray-200">
-                  <Link href="/product" className={`hover:text-[#02c8b0] cursor-pointer block ${pathname === "/product" ? "text-[#02c8b0]" : ""}`} onClick={toggleMobileMenu}>
-                    Product
-                  </Link>
-                </motion.li>
+                <MobileProductMenu 
+                  pathname={pathname} 
+                  onLinkClick={toggleMobileMenu} 
+                  variants={mobileLinkVariants}
+                />
                 <motion.li variants={mobileLinkVariants} className="py-2 border-b border-gray-200">
                   <Link href="/gallery" className={`hover:text-[#02c8b0] cursor-pointer block ${pathname === "/gallery" ? "text-[#02c8b0]" : ""}`} onClick={toggleMobileMenu}>
                     Gallery
