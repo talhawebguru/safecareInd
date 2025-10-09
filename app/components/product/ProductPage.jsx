@@ -5,6 +5,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { FiFilter } from "react-icons/fi";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import ProductCard from "./ProductCard";
+import ProductCardSkeleton from "./ProductCardSkeleton";
 import FilterSidebar from "./FilterSidebar";
 import { fetchProducts } from "@/app/services/api";
 import Skeleton from "react-loading-skeleton";
@@ -337,16 +338,7 @@ const ProductPage = ({ initialCategory, onCategoryChange }) => {
               <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
                 {loading
                   ? Array.from({ length: 6 }).map((_, index) => (
-                      <div
-                        key={index}
-                        className="h-[330px] bg-white rounded-lg relative overflow-hidden flex flex-col cursor-pointer"
-                      >
-                        <Skeleton height={272} />
-                        <div className="flex-1 px-4 pt-3 pb-2 flex flex-col">
-                          <Skeleton width="80%" height={20} className="mt-2" />
-                        </div>
-                        <Skeleton height={40} />
-                      </div>
+                      <ProductCardSkeleton key={index} />
                     ))
                   : products.map((product) => (
                       <ProductCard
