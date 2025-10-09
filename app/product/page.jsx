@@ -10,15 +10,12 @@ const ProductPageContent = () => {
     const [categoryName, setCategoryName] = useState(null);
     const [subcategoryName, setSubcategoryName] = useState(null);
     
-    console.log("[ProductPageContent] Current state - categoryName:", categoryName, "subcategoryName:", subcategoryName);
-    
     return (
         <>
             <Hero categoryName={categoryName} subcategoryName={subcategoryName} />
             <ProductPage 
                 initialCategory={initialCategory} 
                 onCategoryChange={(catName, subName) => {
-                    console.log("[ProductPageContent] onCategoryChange called with:", catName, subName);
                     setCategoryName(catName);
                     setSubcategoryName(subName);
                 }}

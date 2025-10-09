@@ -7,14 +7,14 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import ProductCard from "./ProductCard";
 import ProductCardSkeleton from "./ProductCardSkeleton";
 import FilterSidebar from "./FilterSidebar";
-import { fetchProducts } from "@/app/services/api";
+import { fetchAllProducts } from "@/app/services/api";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const ProductPage = ({ initialCategory, onCategoryChange }) => {
-  console.log("[ProductPage] initialCategory prop:", initialCategory); // Expect: category ID from URL or undefined
   const [showFilters, setShowFilters] = useState(false);
-  const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]); // Store all products
+  const [filteredProducts, setFilteredProducts] = useState([]); // Store filtered products
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -24,28 +24,15 @@ const ProductPage = ({ initialCategory, onCategoryChange }) => {
   );
   const [currentCategoryName, setCurrentCategoryName] = useState(null);
   const [currentSubcategoryName, setCurrentSubcategoryName] = useState(null);
-  console.log(
-    "[ProductFull] selectedCategories state (init):",
-    selectedCategories
-  ); // Expect: [category ID] or ["all"]
 
   const pageSize = 25; // Number of products per page
 
+  // Fetch all products once on component mount
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAllData = async () => {
       setLoading(true);
       try {
-        // Build filters object
-        const filters = {};
-
-        if (
-          !selectedCategories.includes("all") &&
-          selectedCategories.length > 0
-        ) {
-          filters.categorySlugs = selectedCategories;
-        }
-
-        const data = await fetchProducts(currentPage, pageSize, filters);
+        const data = await fetchAllProducts();
 
         // Map Strapi data to component format
         const mappedProducts = data.data.map((product) => {
@@ -68,79 +55,95 @@ const ProductPage = ({ initialCategory, onCategoryChange }) => {
           };
         });
 
-        setProducts(mappedProducts);
-        setTotalPages(data.meta.pagination.pageCount);
-        setTotalProducts(data.meta.pagination.total);
-
-        // Extract category/subcategory names from first product
-        if (!selectedCategories.includes("all") && data.data.length > 0) {
-          const firstProduct = data.data[0];
-          const categoryName = firstProduct.category?.name || null;
-          const subcategoryName = firstProduct.subcategories?.[0]?.name || null;
-          console.log(
-            "[ProductPage] Extracted names - Category:",
-            categoryName,
-            "Subcategory:",
-            subcategoryName
-          );
-          setCurrentCategoryName(categoryName);
-          setCurrentSubcategoryName(subcategoryName);
-
-          // Notify parent component about category change
-          if (onCategoryChange) {
-            console.log(
-              "[ProductPage] Calling onCategoryChange with:",
-              categoryName,
-              subcategoryName
-            );
-            onCategoryChange(categoryName, subcategoryName);
-          }
-        } else {
-          console.log(
-            "[ProductPage] No filter or 'all' selected, resetting category names"
-          );
-          setCurrentCategoryName(null);
-          setCurrentSubcategoryName(null);
-
-          // Notify parent component that no category is selected
-          if (onCategoryChange) {
-            console.log(
-              "[ProductPage] Calling onCategoryChange with: null, null"
-            );
-            onCategoryChange(null, null);
-          }
-        }
+        setAllProducts(mappedProducts);
       } catch (error) {
-        console.error(
-          "Error fetching products:",
-          error.response?.data || error.message
-        );
-        setProducts([]);
-        setCurrentCategoryName(null);
-        setCurrentSubcategoryName(null);
+        console.error('Error in ProductPage fetchAllData:', error.response?.data || error.message);
+        setAllProducts([]);
       } finally {
         setLoading(false);
       }
     };
-    fetchData();
-  }, [currentPage, selectedCategories]);
+    fetchAllData();
+  }, []); // Only run once on mount
+
+  // Filter products based on selected categories
+  useEffect(() => {
+    if (allProducts.length === 0) {
+      return;
+    }
+
+    let filtered = [];
+
+    if (selectedCategories.includes("all")) {
+      filtered = allProducts;
+    } else {
+      filtered = allProducts.filter(product => {
+        return selectedCategories.includes(product.categorySlug);
+      });
+    }
+
+    setFilteredProducts(filtered);
+
+    // Calculate pagination
+    const totalFiltered = filtered.length;
+    const calculatedTotalPages = Math.ceil(totalFiltered / pageSize);
+    setTotalPages(calculatedTotalPages);
+    setTotalProducts(totalFiltered);
+
+    // Reset to page 1 when filters change
+    setCurrentPage(1);
+
+    // Extract category/subcategory names based on selection
+    if (!selectedCategories.includes("all") && selectedCategories.length > 0) {
+      if (selectedCategories.length === 1) {
+        // Single category selected - use the category name from first filtered product
+        const firstProduct = filtered[0];
+        const categoryName = firstProduct?.catName || null;
+        
+        setCurrentCategoryName(categoryName);
+        setCurrentSubcategoryName(null);
+
+        // Notify parent component about category change
+        if (onCategoryChange) {
+          onCategoryChange(categoryName, null);
+        }
+      } else {
+        // Multiple categories selected - show "Multiple Categories"
+        setCurrentCategoryName("Multiple Categories");
+        setCurrentSubcategoryName(null);
+
+        // Notify parent component about multiple category selection
+        if (onCategoryChange) {
+          onCategoryChange("Multiple Categories", null);
+        }
+      }
+    } else {
+      setCurrentCategoryName(null);
+      setCurrentSubcategoryName(null);
+
+      // Notify parent component that no category is selected
+      if (onCategoryChange) {
+        onCategoryChange(null, null);
+      }
+    }
+  }, [selectedCategories, allProducts]); // Run when categories or products change
+
+  // Get current page products
+  const getCurrentPageProducts = () => {
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    const currentProducts = filteredProducts.slice(startIndex, endIndex);
+    return currentProducts;
+  };
 
   // Sync selectedCategories with initialCategory when it changes
   useEffect(() => {
-    console.log(
-      "[ProductPage] useEffect - initialCategory changed:",
-      initialCategory
-    );
     if (initialCategory) {
       setSelectedCategories([initialCategory]);
       setCurrentPage(1);
-      console.log("[ProductPage] setSelectedCategories([initialCategory])", [
-        initialCategory,
-      ]);
     } else {
       setSelectedCategories(["all"]);
       setCurrentPage(1);
-      console.log('[ProductPage] setSelectedCategories(["all"])');
     }
   }, [initialCategory]);
 
@@ -293,10 +296,6 @@ const ProductPage = ({ initialCategory, onCategoryChange }) => {
                 selectedCategories={selectedCategories}
                 setSelectedCategories={setSelectedCategories}
               />
-              {console.log(
-                "[ProductFull] Rendering FilterSidebar with selectedCategories:",
-                selectedCategories
-              )}
             </div>
 
             {/* Main Product Grid */}
@@ -340,7 +339,7 @@ const ProductPage = ({ initialCategory, onCategoryChange }) => {
                   ? Array.from({ length: 6 }).map((_, index) => (
                       <ProductCardSkeleton key={index} />
                     ))
-                  : products.map((product) => (
+                  : getCurrentPageProducts().map((product) => (
                       <ProductCard
                         key={product.id}
                         image={product.imageUrl || "/images/category1.png"}

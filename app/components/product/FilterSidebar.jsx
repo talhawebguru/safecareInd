@@ -7,7 +7,6 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const FilterSidebar = ({ selectedCategories, setSelectedCategories }) => {
-  console.log("[FilterSidebar] selectedCategories prop:", selectedCategories);
   const [openCategory, setOpenCategory] = useState(true);
   const [openSubcategories, setOpenSubcategories] = useState({});
   const [categories, setCategories] = useState([]);
@@ -37,9 +36,6 @@ const FilterSidebar = ({ selectedCategories, setSelectedCategories }) => {
   };
 
   const handleCategoryChange = (value) => {
-    console.log("[FilterSidebar] handleCategoryChange called with:", value);
-    console.log("[FilterSidebar] Current selectedCategories:", selectedCategories);
-    
     if (value === "all") {
       setSelectedCategories(["all"]);
     } else {
@@ -50,14 +46,13 @@ const FilterSidebar = ({ selectedCategories, setSelectedCategories }) => {
         if (filteredPrev.includes(value)) {
           // Remove the category if it's already selected
           const newSelection = filteredPrev.filter((v) => v !== value);
+          
           // If no categories are selected, default to "all"
           const result = newSelection.length === 0 ? ["all"] : newSelection;
-          console.log("[FilterSidebar] Removing category, new selection:", result);
           return result;
         } else {
           // Add the category to selection
           const result = [...filteredPrev, value];
-          console.log("[FilterSidebar] Adding category, new selection:", result);
           return result;
         }
       });
