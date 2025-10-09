@@ -1,22 +1,22 @@
-"use client"
-import React from 'react'
-import Container from '../common/Container'
-import Image from 'next/image'
-import { motion } from "motion/react"
+"use client";
+import React from "react";
+import Container from "../common/Container";
+import Image from "next/image";
+import { motion } from "motion/react";
 
 const KeyStrength = () => {
   return (
-    <section className='py-16 bg-gray-50 overflow-x-hidden'>
+    <section className="py-16 bg-gray-50 overflow-x-hidden">
       <Container>
         {/* Header */}
-        <motion.div 
+        <motion.div
           className="text-center mb-16 "
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <motion.h2 
+          <motion.h2
             className="text-[#1e1e1e] text-[44px] font-normal font-roboto mb-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -25,7 +25,7 @@ const KeyStrength = () => {
           >
             Our Key Strengths
           </motion.h2>
-          <motion.p 
+          <motion.p
             className="text-[#1e1e1e] text-xl font-normal font-poppins"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -39,7 +39,7 @@ const KeyStrength = () => {
         {/* Strengths Grid */}
         <div className="space-y-16 lg:space-y-24 max-w-7xl mx-auto">
           {/* Clean Rooms */}
-          <motion.div 
+          <motion.div
             className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-16"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -54,7 +54,7 @@ const KeyStrength = () => {
                 {/* Image */}
                 <div className="relative w-[260px] sm:w-[300px] h-[300px] sm:h-[350px] ml-[20px] sm:ml-[30px] mt-[20px] sm:mt-[28px]">
                   <Image
-                    src="/images/strength-cleanroom.png"
+                    src="/images/CleanRooms.png"
                     alt="Clean Rooms"
                     fill
                     className="object-cover rounded-sm"
@@ -68,7 +68,9 @@ const KeyStrength = () => {
               {/* Badge */}
               <div className="mb-4 lg:mb-6">
                 <div className="px-3 py-1.5 bg-[#079fa5]/20 rounded-lg inline-flex justify-center items-center">
-                  <div className="text-[#323232] text-xs sm:text-[13px] font-medium font-poppins">Classified ISO 7, ISO 8</div>
+                  <div className="text-[#323232] text-xs sm:text-[13px] font-medium font-poppins">
+                    Classified ISO 7, ISO 8
+                  </div>
                 </div>
               </div>
 
@@ -79,13 +81,16 @@ const KeyStrength = () => {
 
               {/* Description */}
               <p className="text-[#1e1e1e] text-sm sm:text-base font-normal font-poppins leading-relaxed max-w-lg mx-auto lg:mx-0">
-                Spread over a total area of 1500 sq meters, Safecare manufacturing takes place in the ISO 7, ISO 8 classified clean room environment that tests two levels of pollution's such as dust, airborne microbes, aerosol particles and chemical vapours.
+                Spread over a total area of 1500 sq meters. Safecare
+                manufacturing takes places in the ISO 7, ISO 8 classified clean
+                room environment that has a low level of pollutants such as
+                dust, airborne microbes, aerosol particles and chemical vapours.{" "}
               </p>
             </div>
           </motion.div>
 
           {/* Storage System */}
-          <motion.div 
+          <motion.div
             className="flex flex-col lg:flex-row-reverse items-center lg:items-start gap-8 lg:gap-16"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -100,7 +105,7 @@ const KeyStrength = () => {
                 {/* Image */}
                 <div className="relative w-[260px] sm:w-[300px] h-[300px] sm:h-[350px] mr-[20px] sm:mr-[30px] mt-[20px] sm:mt-[28px]">
                   <Image
-                    src="/images/strength-pharma.png"
+                    src="/images/strength-cleanroom.png"
                     alt="Storage System"
                     fill
                     className="object-cover rounded-sm"
@@ -114,7 +119,9 @@ const KeyStrength = () => {
               {/* Badge */}
               <div className="mb-4 lg:mb-6">
                 <div className="px-3 py-1.5 bg-[#079fa5]/20 rounded-lg inline-flex justify-center items-center">
-                  <div className="text-[#323232] text-xs sm:text-[13px] font-medium font-poppins">High-tech Automated</div>
+                  <div className="text-[#323232] text-xs sm:text-[13px] font-medium font-poppins">
+                    High-tech Automated
+                  </div>
                 </div>
               </div>
 
@@ -125,13 +132,16 @@ const KeyStrength = () => {
 
               {/* Description */}
               <p className="text-[#1e1e1e] text-sm sm:text-base font-normal font-poppins leading-relaxed max-w-lg mx-auto lg:mx-0">
-                Safecare holds the unique accomplishment of having the world's finest automated storage system spread over a vast area of 30000 sq.ft. The system ensures 100 percent efficiency in storage without involving any manual interventions.
+                Safecare holds the unique accomplishment of having the world's
+                finest automated storage system spread over a vast area of 30000
+                sq ft. The system ensures 100 percent effciency in storage
+                without involving any manual interventions
               </p>
             </div>
           </motion.div>
 
           {/* Pharma Grade */}
-          <motion.div 
+          <motion.div
             className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-16"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -146,7 +156,7 @@ const KeyStrength = () => {
                 {/* Image */}
                 <div className="relative w-[260px] sm:w-[300px] h-[300px] sm:h-[350px] ml-[20px] sm:ml-[30px] mt-[20px] sm:mt-[28px]">
                   <Image
-                    src="/images/strength-dental.png"
+                    src="/images/PharmaGrade.png"
                     alt="Pharma Grade"
                     fill
                     className="object-cover rounded-sm"
@@ -160,7 +170,9 @@ const KeyStrength = () => {
               {/* Badge */}
               <div className="mb-4 lg:mb-6">
                 <div className="px-3 py-1.5 bg-[#079fa5]/20 rounded-lg inline-flex justify-center items-center">
-                  <div className="text-[#323232] text-xs sm:text-[13px] font-medium font-poppins">Made with Supremas</div>
+                  <div className="text-[#323232] text-xs sm:text-[13px] font-medium font-poppins">
+                    Made with Supreme
+                  </div>
                 </div>
               </div>
 
@@ -171,14 +183,17 @@ const KeyStrength = () => {
 
               {/* Description */}
               <p className="text-[#1e1e1e] text-sm sm:text-base font-normal font-poppins leading-relaxed max-w-lg mx-auto lg:mx-0">
-                Spread over a total area of 1500 sq meters, Safecare manufacturing takes place in the ISO 7, ISO 8 classified clean room environment that has a low level of pollutants such as dust, airborne microbes, aerosol particles and chemical vapours.
+                Our high quality consumables are meant to be used in hospitals
+                and laboratories. We here at Safecare uses the supreme pharma
+                grade raw materials which are 95 % resistant to all the
+                chemicals and acids.
               </p>
             </div>
           </motion.div>
         </div>
       </Container>
     </section>
-  )
-}
+  );
+};
 
-export default KeyStrength
+export default KeyStrength;
