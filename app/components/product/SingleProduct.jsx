@@ -4,6 +4,7 @@ import Image from "next/image";
 import Container from "../common/Container";
 import VariantTable from "./VariantTable";
 import { AiOutlineWarning } from "react-icons/ai";
+import MarkdownRenderer from "../common/MarkdownRenderer";
 import { fetchProductBySlug } from "@/app/services/api";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -164,9 +165,8 @@ const SingleProduct = ({ productId }) => {
 
             {/* Short Description */}
             {product.shortDescription && (
-              <div
-                className="text-gray-600 text-lg leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: product.shortDescription }}
+              <MarkdownRenderer
+                content={product.shortDescription}
               />
             )}
 
@@ -248,10 +248,7 @@ const SingleProduct = ({ productId }) => {
             <h2 className="text-2xl font-bold text-[#1e1e1e] mb-6">
               Product Details
             </h2>
-            <div
-              className="prose max-w-none text-gray-600 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: product.description }}
-            />
+            <MarkdownRenderer content={product.description} />
           </div>
         )}
 
