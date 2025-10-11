@@ -52,6 +52,7 @@ const ProductPage = ({ initialCategory, onCategoryChange }) => {
             imageUrl: imageUrl,
             description: product.description,
             shortDescription: product.shortDescription,
+            code: product?.code,
           };
         });
 
@@ -360,6 +361,7 @@ const ProductPage = ({ initialCategory, onCategoryChange }) => {
                         key={product.id}
                         image={product.imageUrl || "/images/category1.png"}
                         title={product.prdName}
+                        code={product.code}
                         onViewDetails={`/product/${product.prdID}`}
                       />
                     ))}

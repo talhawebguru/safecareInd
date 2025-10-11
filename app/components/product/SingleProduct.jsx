@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Container from "../common/Container";
+import VariantTable from "./VariantTable";
+import { AiOutlineWarning } from "react-icons/ai";
 import { fetchProductBySlug } from "@/app/services/api";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -65,8 +67,12 @@ const SingleProduct = ({ productId }) => {
       <section className="py-12">
         <Container>
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-800 mb-4">Product Not Found</h1>
-            <p className="text-gray-600">The product you're looking for doesn't exist.</p>
+            <h1 className="text-2xl font-bold text-gray-800 mb-4">
+              Product Not Found
+            </h1>
+            <p className="text-gray-600">
+              The product you're looking for doesn't exist.
+            </p>
           </div>
         </Container>
       </section>
@@ -75,12 +81,15 @@ const SingleProduct = ({ productId }) => {
 
   // Process images from Strapi
   const productImages = product.image || [];
-  const imageUrls = productImages.map(img => 
-    img.url ? `${process.env.NEXT_PUBLIC_API_URL}${img.url}` : "/images/category1.png"
+  const imageUrls = productImages.map((img) =>
+    img.url
+      ? `${process.env.NEXT_PUBLIC_API_URL}${img.url}`
+      : "/images/category1.png"
   );
-  
+
   // Fallback to default image if no images
-  const displayImages = imageUrls.length > 0 ? imageUrls : ["/images/category1.png"];
+  const displayImages =
+    imageUrls.length > 0 ? imageUrls : ["/images/category1.png"];
 
   return (
     <section className="py-12">
@@ -101,7 +110,7 @@ const SingleProduct = ({ productId }) => {
                 }}
               />
             </div>
-            
+
             {/* Thumbnail Images */}
             {displayImages.length > 1 && (
               <div className="flex gap-2 overflow-x-auto">
@@ -110,8 +119,8 @@ const SingleProduct = ({ productId }) => {
                     key={index}
                     onClick={() => setSelectedImageIndex(index)}
                     className={`relative w-20 h-20 bg-[#f6f9fb] rounded-lg overflow-hidden flex-shrink-0 border-2 transition-colors ${
-                      selectedImageIndex === index 
-                        ? "border-[#079FA5]" 
+                      selectedImageIndex === index
+                        ? "border-[#079FA5]"
                         : "border-transparent hover:border-gray-300"
                     }`}
                   >
@@ -140,14 +149,22 @@ const SingleProduct = ({ productId }) => {
               </div>
             )}
 
-            {/* Product Name */}
-            <h1 className="text-3xl lg:text-4xl font-bold text-[#1e1e1e] leading-tight">
-              {product.name}
-            </h1>
+            {/* Product Name + Code */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <h1 className="text-3xl lg:text-4xl font-bold text-[#1e1e1e] leading-tight">
+                {product.name}
+              </h1>
+              {product.code && (
+                <span className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50/60 px-3 py-1 text-sm font-semibold text-teal-700">
+                  <span className="opacity-80">Code:</span>
+                  <span className="tabular-nums">{product.code}</span>
+                </span>
+              )}
+            </div>
 
             {/* Short Description */}
             {product.shortDescription && (
-              <div 
+              <div
                 className="text-gray-600 text-lg leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: product.shortDescription }}
               />
@@ -156,7 +173,9 @@ const SingleProduct = ({ productId }) => {
             {/* Subcategories */}
             {product.subcategories && product.subcategories.length > 0 && (
               <div className="space-y-2">
-                <h3 className="text-lg font-semibold text-[#1e1e1e]">Applications:</h3>
+                <h3 className="text-lg font-semibold text-[#1e1e1e]">
+                  Applications:
+                </h3>
                 <div className="flex flex-wrap gap-2">
                   {product.subcategories.map((subcat) => (
                     <span
@@ -166,6 +185,31 @@ const SingleProduct = ({ productId }) => {
                       {subcat.name}
                     </span>
                   ))}
+                </div>
+              </div>
+            )}
+
+            {/* Variants Table placed before CTA */}
+            {product.simpleVariants && product.simpleVariants.length > 0 && (
+              <div className="mt-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <h2 className="text-xl font-semibold text-[#1e1e1e]">
+                    Available Sizes / Variants
+                  </h2>
+                  <div className="flex-1 h-px bg-gradient-to-r from-teal-500/60 to-transparent" />
+                </div>
+                <VariantTable variants={product.simpleVariants} />
+                <div
+                  role="note"
+                  className="mt-4 flex items-start gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-gray-700"
+                >
+                  <AiOutlineWarning
+                    aria-hidden
+                    className="mt-0.5 h-5 w-5 text-gray-800"
+                  />
+                  <p className="text-sm">
+                    Custom sizes available upon request.
+                  </p>
                 </div>
               </div>
             )}
@@ -204,12 +248,14 @@ const SingleProduct = ({ productId }) => {
             <h2 className="text-2xl font-bold text-[#1e1e1e] mb-6">
               Product Details
             </h2>
-            <div 
+            <div
               className="prose max-w-none text-gray-600 leading-relaxed"
               dangerouslySetInnerHTML={{ __html: product.description }}
             />
           </div>
         )}
+
+        {/* moved variants table higher */}
       </Container>
     </section>
   );
