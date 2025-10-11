@@ -20,16 +20,16 @@ const MarkdownRenderer = ({ content = "", className = "" }) => {
         rehypePlugins={[rehypeRaw, rehypeSanitize]}
         components={{
           h1: ({ node, ...props }) => (
-            <h1 className="text-2xl md:text-3xl font-bold text-[#1e1e1e]" {...props} />
+            <h1 className="text-2xl md:text-3xl font-bold text-[#1e1e1e] mt-3" {...props} />
           ),
           h2: ({ node, ...props }) => (
-            <h2 className="text-xl md:text-2xl font-semibold text-[#1e1e1e]" {...props} />
+            <h2 className="text-xl md:text-2xl font-semibold text-[#1e1e1e] mt-3" {...props} />
           ),
           h3: ({ node, ...props }) => (
-            <h3 className="text-lg md:text-xl font-semibold text-[#1e1e1e]" {...props} />
+            <h3 className="text-lg md:text-xl font-semibold text-[#1e1e1e] mt-3" {...props} />
           ),
           p: ({ node, ...props }) => (
-            <p className="text-gray-700 leading-relaxed" {...props} />
+            <p className="text-gray-700 leading-relaxed mt-3" {...props} />
           ),
           ul: ({ node, ...props }) => (
             <ul className="list-disc pl-5 space-y-1 text-gray-700" {...props} />

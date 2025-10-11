@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Container from "../common/Container";
 import VariantTable from "./VariantTable";
+import KitVariations from "./KitVariations";
 import { AiOutlineWarning } from "react-icons/ai";
 import MarkdownRenderer from "../common/MarkdownRenderer";
 import { fetchProductBySlug } from "@/app/services/api";
@@ -151,12 +152,12 @@ const SingleProduct = ({ productId }) => {
             )}
 
             {/* Product Name + Code */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div className="flex flex-col sm:flex-row lg:flex-col lg:items-start xl:flex-row xl:items-center xl:flex-wrap sm:items-center sm:justify-between gap-3">
               <h1 className="text-3xl lg:text-4xl font-bold text-[#1e1e1e] leading-tight">
                 {product.name}
               </h1>
               {product.code && (
-                <span className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50/60 px-3 py-1 text-sm font-semibold text-teal-700">
+                <span className="w-fit inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50/60 px-3 py-1 text-sm font-semibold text-teal-700">
                   <span className="opacity-80">Code:</span>
                   <span className="tabular-nums">{product.code}</span>
                 </span>
@@ -211,6 +212,19 @@ const SingleProduct = ({ productId }) => {
                     Custom sizes available upon request.
                   </p>
                 </div>
+              </div>
+            )}
+
+            {/* Kit Variations */}
+            {product.kit_variations && product.kit_variations.length > 0 && (
+              <div className="mt-8">
+                <div className="flex items-center gap-3 mb-3">
+                  <h2 className="text-xl font-semibold text-[#1e1e1e]">
+                    Kit Variations
+                  </h2>
+                  <div className="flex-1 h-px bg-gradient-to-r from-teal-500/60 to-transparent" />
+                </div>
+                <KitVariations variations={product.kit_variations} />
               </div>
             )}
 

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -29,7 +30,7 @@ export const fetchCategories = async () => {
 // Fetch products with filters, pagination, and category/subcategory population
 export const fetchProducts = async (page = 1, pageSize = 25, filters = {}) => {
   try {
-    let queryString = `/api/products?pagination[page]=${page}&pagination[pageSize]=${pageSize}&populate=*`;
+    let queryString = `/api/products?pagination[page]=${page}&pagination[pageSize]=${pageSize}`;
     
     // Only add search filter to API, handle category filtering client-side
     if (filters.search) {
@@ -52,7 +53,7 @@ export const fetchProducts = async (page = 1, pageSize = 25, filters = {}) => {
 // New function to fetch all products for client-side filtering
 export const fetchAllProducts = async () => {
   try {
-    const queryString = `/api/products?pagination[pageSize]=100&populate=*`;
+    const queryString = `/api/products?pagination[pageSize]=100`;
     const response = await api.get(queryString);
     return response.data;
   } catch (error) {
@@ -64,7 +65,25 @@ export const fetchAllProducts = async () => {
 // Fetch single product by slug
 export const fetchProductBySlug = async (slug) => {
   try {
-    const response = await api.get(`/api/products?filters[slug][$eq]=${slug}&populate=*`);
+    const query = qs.stringify(
+      {
+        filters: { slug: { $eq: slug } },
+        populate: {
+          category: true,
+          subcategories: true,
+          image: true,
+          seo: true,
+          simpleVariants: true,
+          kit_variations: {
+            populate: {
+              kit_items: true,
+            },
+          },
+        },
+      },
+      { encodeValuesOnly: true }
+    );
+    const response = await api.get(`/api/products?${query}`);
     return response.data.data[0];
   } catch (error) {
     console.error('Error fetching product:', error.response?.data || error.message);
